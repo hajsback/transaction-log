@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/transactionLog
+
+activemq:
+  host: "localhost"
+  user: "hajsback"
+  pass: "secr3t"

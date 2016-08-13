@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        springBootVer = "1.3.6.RELEASE"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVer"
+    }
+}
+
+group 'com.pawmot.hajsback'
+version '0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+repositories {
+    mavenCentral()
+}
+
+def camelVer = "2.17.2"
+
+dependencies {
+    // Spring
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVer"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVer"
+
+    // Camel
+    compile "org.apache.camel:camel-spring-boot-starter:$camelVer"
+    compile "org.apache.camel:camel-jms:$camelVer"
+
+    // ActiveMQ
+    compile "org.apache.activemq:activemq-core:5.7.0"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:1.16.10"
+}
