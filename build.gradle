@@ -32,6 +32,7 @@ dependencies {
     // Camel
     compile "org.apache.camel:camel-spring-boot-starter:$camelVer"
     compile "org.apache.camel:camel-jms:$camelVer"
+    compile "org.apache.camel:camel-gson:$camelVer"
 
     // ActiveMQ
     compile "org.apache.activemq:activemq-core:5.7.0"
@@ -41,4 +42,7 @@ dependencies {
 
     // Lombok
     compileOnly "org.projectlombok:lombok:1.16.10"
+
+    // internal
+    compile project(":internal-api")
 }
