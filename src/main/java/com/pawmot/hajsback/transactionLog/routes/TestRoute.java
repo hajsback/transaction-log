@@ -9,7 +9,7 @@ public class TestRoute extends SpringRouteBuilder {
     public void configure() throws Exception {
         from("jms:queue:transations")
                 .process(ex -> {
-                    System.out.println(ex.getIn().getBody());
+                    System.out.println(ex.getIn().getBody() + " " + ex.getIn().getHeader("JWT"));
                     ex.getIn().setBody("REPLY");
                 });
     }

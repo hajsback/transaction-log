@@ -36,6 +36,9 @@ dependencies {
     // ActiveMQ
     compile "org.apache.activemq:activemq-core:5.7.0"
 
+    // JWT
+    compile 'com.auth0:java-jwt:2.2.0'
+
     // Lombok
     compileOnly "org.projectlombok:lombok:1.16.10"
 }

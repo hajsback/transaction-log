@@ -7,3 +7,6 @@ activemq:
   host: "localhost"
   user: "hajsback"
   pass: "secr3t"
+
+security:
+  secret: "secret"
