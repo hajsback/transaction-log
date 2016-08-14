@@ -16,7 +16,7 @@ public class TestRoute extends SpringRouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("jms:queue:transations")
+        from("jms:queue:new_transaction")
                 .process(ex -> {
                     String jwt = ex.getIn().getHeader("JWT", String.class);
 
