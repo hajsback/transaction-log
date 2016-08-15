@@ -27,6 +27,7 @@ def camelVer = "2.17.2"
 dependencies {
     // Spring
     compile "org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVer"
+    compile "org.springframework.boot:spring-boot-starter-validation:$springBootVer"
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVer"
 
     // Camel
