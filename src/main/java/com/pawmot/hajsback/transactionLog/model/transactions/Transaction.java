@@ -17,7 +17,6 @@ public class Transaction {
     @Id
     private ObjectId id;
 
-    // TODO: validate that one or the other is the requester
     @Getter
     @Email
     private String creditorEmail;
@@ -26,7 +25,6 @@ public class Transaction {
     @Email
     private String debtorEmail;
 
-    // TODO: validate positive amount!
     @Getter
     private int amount;
 }
