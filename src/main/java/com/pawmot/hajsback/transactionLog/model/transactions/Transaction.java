@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Transaction {
-    Transaction(String creditorEmail, String debtorEmail, int amount) {
-        this.creditorEmail = creditorEmail;
-        this.debtorEmail = debtorEmail;
+    Transaction(String sourceEmail, String targetEmail, int amount) {
+        this.sourceEmail = sourceEmail;
+        this.targetEmail = targetEmail;
         this.amount = amount;
     }
 
@@ -19,11 +19,11 @@ public class Transaction {
 
     @Getter
     @Email
-    private String creditorEmail;
+    private String sourceEmail;
 
     @Getter
     @Email
-    private String debtorEmail;
+    private String targetEmail;
 
     @Getter
     private int amount;

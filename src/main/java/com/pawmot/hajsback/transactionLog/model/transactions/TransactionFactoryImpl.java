@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 class TransactionFactoryImpl implements TransactionFactory {
     @Override
-    public Transaction create(String creditorEmail, String debtorEmail, int amount) {
-        return new Transaction(creditorEmail, debtorEmail, amount);
+    public Transaction create(String sourceEmail, String targetEmail, int amount) {
+        return new Transaction(sourceEmail, targetEmail, amount);
     }
 }

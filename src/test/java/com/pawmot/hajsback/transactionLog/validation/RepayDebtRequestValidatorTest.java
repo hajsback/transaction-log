@@ -1,6 +1,6 @@
 package com.pawmot.hajsback.transactionLog.validation;
 
-import com.pawmot.hajsback.transactionLog.dto.transactions.AddDebtRequest;
+import com.pawmot.hajsback.transactionLog.dto.transactions.RepayDebtRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -8,12 +8,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AddDebtRequestValidatorTest {
-    private AddDebtRequestValidator validator = new AddDebtRequestValidatorImpl();
+public class RepayDebtRequestValidatorTest {
+    private RepayDebtRequestValidator validator = new RepayDebtRequestValidatorImpl();
 
     @Test
     public void shouldAcceptPositiveAmountMatchingCreditorAddress() {
-        AddDebtRequest request = getAddDebtRequestBuilderWithDefaultData()
+        RepayDebtRequest request = getRepayDebtRequestBuilderWithDefaultData()
                 .build();
 
         boolean result = validator.validate(request, "test1@t.pl");
@@ -22,8 +22,8 @@ public class AddDebtRequestValidatorTest {
     }
 
     @Test
-    public void shouldAcceptPositiveAmountMatchingDebtorAddress() {
-        AddDebtRequest request = getAddDebtRequestBuilderWithDefaultData()
+    public void positiveAmountMatchingDebtorAddress() {
+        RepayDebtRequest request = getRepayDebtRequestBuilderWithDefaultData()
                 .build();
 
         boolean result = validator.validate(request, "test2@t.pl");
@@ -32,8 +32,8 @@ public class AddDebtRequestValidatorTest {
     }
 
     @Test
-    public void shouldRejectNegativeAmount() {
-        AddDebtRequest request = getAddDebtRequestBuilderWithDefaultData()
+    public void negativeAmount() {
+        RepayDebtRequest request = getRepayDebtRequestBuilderWithDefaultData()
                 .amount(-10)
                 .build();
 
@@ -43,8 +43,8 @@ public class AddDebtRequestValidatorTest {
     }
 
     @Test
-    public void shouldRejectNotMatchingAddress() {
-        AddDebtRequest request = getAddDebtRequestBuilderWithDefaultData()
+    public void addressNotMatching() {
+        RepayDebtRequest request = getRepayDebtRequestBuilderWithDefaultData()
                 .build();
 
         boolean result = validator.validate(request, "test4@t.pl");
@@ -52,10 +52,10 @@ public class AddDebtRequestValidatorTest {
         assertEquals(false, result);
     }
 
-    private AddDebtRequest.AddDebtRequestBuilder getAddDebtRequestBuilderWithDefaultData() {
-        return AddDebtRequest.builder()
+    private RepayDebtRequest.RepayDebtRequestBuilder getRepayDebtRequestBuilderWithDefaultData() {
+        return RepayDebtRequest.builder()
                 .amount(10)
-                .creditorEmail("test1@t.pl")
-                .debtorEmail("test2@t.pl");
+                .payerEmail("test1@t.pl")
+                .payeeEmail("test2@t.pl");
     }
 }

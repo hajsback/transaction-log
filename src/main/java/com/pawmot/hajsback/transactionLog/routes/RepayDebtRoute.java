@@ -5,9 +5,8 @@ import com.google.gson.JsonSyntaxException;
 import com.pawmot.hajsback.common.JmsEndpointFactory;
 import com.pawmot.hajsback.internal.api.results.Result;
 import com.pawmot.hajsback.internal.api.results.ResultKind;
-import com.pawmot.hajsback.transactionLog.dto.transactions.AddDebtRequest;
+import com.pawmot.hajsback.transactionLog.dto.transactions.RepayDebtRequest;
 import com.pawmot.hajsback.transactionLog.services.TransactionService;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.component.jms.JmsMessageType;
 import org.apache.camel.spring.SpringRouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.pawmot.hajsback.internal.api.transactions.QueueNames.ADD_DEBT_QUEUE;
+import static com.pawmot.hajsback.internal.api.transactions.QueueNames.REPAY_DEBT_QUEUE;
 import static org.apache.camel.model.dataformat.JsonLibrary.Gson;
 
 @Component
-@Slf4j
-public class AddDebtRoute extends SpringRouteBuilder {
+public class RepayDebtRoute extends SpringRouteBuilder {
     private final TransactionService transactionService;
     private final JmsEndpointFactory jmsEndpointFactory;
 
@@ -29,7 +27,7 @@ public class AddDebtRoute extends SpringRouteBuilder {
     private String secret;
 
     @Autowired
-    public AddDebtRoute(TransactionService transactionService, JmsEndpointFactory jmsEndpointFactory) {
+    public RepayDebtRoute(TransactionService transactionService, JmsEndpointFactory jmsEndpointFactory) {
         this.transactionService = transactionService;
         this.jmsEndpointFactory = jmsEndpointFactory;
     }
@@ -44,8 +42,8 @@ public class AddDebtRoute extends SpringRouteBuilder {
                 })
                 .marshal().json(Gson);
 
-        from(jmsEndpointFactory.createListeningEndpoint(ADD_DEBT_QUEUE, JmsMessageType.Text))
-                .routeId("add_debt")
+        from(jmsEndpointFactory.createListeningEndpoint(REPAY_DEBT_QUEUE, JmsMessageType.Text))
+                .routeId("repay_debt")
                 .process(ex -> {
                     String jwt = ex.getIn().getHeader("JWT", String.class);
 
@@ -57,9 +55,9 @@ public class AddDebtRoute extends SpringRouteBuilder {
 
                     ex.setProperty("userEmail", claims.get("com.pawmot.hajsback.user.email"));
                 })
-                .unmarshal().json(Gson, AddDebtRequest.class)
+                .unmarshal().json(Gson, RepayDebtRequest.class)
                 .log("body")
-                .bean(transactionService, "addDebt")
+                .bean(transactionService, "repayDebt")
                 .marshal().json(Gson);
     }
 }

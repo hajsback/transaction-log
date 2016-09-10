@@ -1,6 +1,6 @@
 package com.pawmot.hajsback.transactionLog.validation;
 
-import com.pawmot.hajsback.internal.api.transactions.AddDebtRequest;
+import com.pawmot.hajsback.transactionLog.dto.transactions.AddDebtRequest;
 import org.springframework.stereotype.Component;
 
 @Component
