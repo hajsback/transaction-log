@@ -10,6 +10,7 @@
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.apache.activemq" level="INFO"/>
     <logger name="org.apache.camel" level="INFO"/>
+    <logger name="org.mongodb.driver" level="INFO" />
 
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
