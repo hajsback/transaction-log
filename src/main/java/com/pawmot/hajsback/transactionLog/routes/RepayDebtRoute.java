@@ -58,6 +58,7 @@ public class RepayDebtRoute extends SpringRouteBuilder {
                 .unmarshal().json(Gson, RepayDebtRequest.class)
                 .log("body")
                 .bean(transactionService, "repayDebt")
+                .wireTap("seda:debt-graph")
                 .marshal().json(Gson);
     }
 }

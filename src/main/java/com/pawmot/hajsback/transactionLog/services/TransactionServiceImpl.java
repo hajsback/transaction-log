@@ -33,26 +33,26 @@ class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Result addDebt(AddDebtRequest request, @ExchangeProperty("userEmail") String userEmail) {
+    public Result<Transaction> addDebt(AddDebtRequest request, @ExchangeProperty("userEmail") String userEmail) {
         if (!addDebtRequestValidator.validate(request, userEmail)) {
-            return Result.builder().resultKind(ResultKind.ValidationError).build();
+            return Result.<Transaction>builder().resultKind(ResultKind.ValidationError).build();
         }
 
         Transaction transaction = transactionFactory.create(request.getCreditorEmail(), request.getDebtorEmail(), request.getAmount());
 
         transactionRepository.save(transaction);
-        return Result.builder().resultKind(ResultKind.OK).build();
+        return Result.<Transaction>builder().resultKind(ResultKind.OK).data(transaction).build();
     }
 
     @Override
-    public Result repayDebt(RepayDebtRequest request, @ExchangeProperty("userEmail") String userEmail) {
+    public Result<Transaction> repayDebt(RepayDebtRequest request, @ExchangeProperty("userEmail") String userEmail) {
         if (!repayDebtRequestValidator.validate(request, userEmail)) {
-            return Result.builder().resultKind(ResultKind.ValidationError).build();
+            return Result.<Transaction>builder().resultKind(ResultKind.ValidationError).build();
         }
 
         Transaction transaction = transactionFactory.create(request.getPayerEmail(), request.getPayeeEmail(), request.getAmount());
 
         transactionRepository.save(transaction);
-        return Result.builder().resultKind(ResultKind.OK).build();
+        return Result.<Transaction>builder().resultKind(ResultKind.OK).data(transaction).build();
     }
 }

@@ -60,6 +60,7 @@ public class AddDebtRoute extends SpringRouteBuilder {
                 .unmarshal().json(Gson, AddDebtRequest.class)
                 .log("body")
                 .bean(transactionService, "addDebt")
+                .wireTap("seda:debt-graph")
                 .marshal().json(Gson);
     }
 }
