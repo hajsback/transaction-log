@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/transactionLog
+      uri: mongodb://localhost:27018/transactionLog
 
 activemq:
   host: localhost
