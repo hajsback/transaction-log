@@ -1,7 +1,7 @@
 package com.pawmot.hajsback.transactionLog.services;
 
-import com.pawmot.hajsback.internal.api.results.Result;
-import com.pawmot.hajsback.internal.api.results.ResultKind;
+import com.pawmot.hajsback.transactionLog.dto.Result;
+import com.pawmot.hajsback.transactionLog.dto.ResultKind;
 import com.pawmot.hajsback.transactionLog.dto.transactions.RepayDebtRequest;
 import com.pawmot.hajsback.transactionLog.model.transactions.Transaction;
 import com.pawmot.hajsback.transactionLog.model.transactions.TransactionFactory;
@@ -34,7 +34,7 @@ public class TransactionServiceRepayDebtTest {
 
     @Before
     public void setup() {
-        service = new TransactionServiceImpl(repository, factory, null, validator);
+        service = new TransactionService(repository, factory, null, validator);
     }
 
     @Test

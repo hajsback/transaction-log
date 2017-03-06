@@ -4,9 +4,14 @@ spring:
       uri: mongodb://localhost:27017/transactionLog
 
 activemq:
-  host: "localhost"
-  user: "hajsback"
-  pass: "secr3t"
+  host: localhost
+  user: hajsback
+  pass: secr3t
 
 security:
-  secret: "secret"
+  secret: secret
+
+queues:
+  addDebt: add_debt
+  repayDebt: repay_debt
+  debtGraph: debt_graph

@@ -2,10 +2,10 @@ package com.pawmot.hajsback.transactionLog.routes;
 
 import com.auth0.jwt.JWTVerifier;
 import com.google.gson.JsonSyntaxException;
-import com.pawmot.hajsback.common.JmsEndpointFactory;
-import com.pawmot.hajsback.internal.api.results.Result;
-import com.pawmot.hajsback.internal.api.results.ResultKind;
+import com.pawmot.hajsback.transactionLog.dto.Result;
+import com.pawmot.hajsback.transactionLog.dto.ResultKind;
 import com.pawmot.hajsback.transactionLog.dto.transactions.AddDebtRequest;
+import com.pawmot.hajsback.transactionLog.jms.JmsEndpointFactory;
 import com.pawmot.hajsback.transactionLog.services.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.component.jms.JmsMessageType;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.pawmot.hajsback.internal.api.transactions.QueueNames.ADD_DEBT_QUEUE;
 import static org.apache.camel.model.dataformat.JsonLibrary.Gson;
 
 @Component
@@ -24,14 +23,18 @@ import static org.apache.camel.model.dataformat.JsonLibrary.Gson;
 public class AddDebtRoute extends SpringRouteBuilder {
     private final TransactionService transactionService;
     private final JmsEndpointFactory jmsEndpointFactory;
+    private String addDebtQueueName;
 
     @Value("${security.secret}")
     private String secret;
 
     @Autowired
-    public AddDebtRoute(TransactionService transactionService, JmsEndpointFactory jmsEndpointFactory) {
+    public AddDebtRoute(TransactionService transactionService,
+                        JmsEndpointFactory jmsEndpointFactory,
+                        @Value("${queues.addDebt}") String addDebtQueueName) {
         this.transactionService = transactionService;
         this.jmsEndpointFactory = jmsEndpointFactory;
+        this.addDebtQueueName = addDebtQueueName;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class AddDebtRoute extends SpringRouteBuilder {
                 })
                 .marshal().json(Gson);
 
-        from(jmsEndpointFactory.createListeningEndpoint(ADD_DEBT_QUEUE, JmsMessageType.Text))
+        from(jmsEndpointFactory.createListeningEndpoint(addDebtQueueName, JmsMessageType.Text))
                 .routeId("add_debt")
                 .process(ex -> {
                     String jwt = ex.getIn().getHeader("JWT", String.class);

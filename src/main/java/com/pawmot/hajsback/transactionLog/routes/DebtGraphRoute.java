@@ -1,22 +1,25 @@
 package com.pawmot.hajsback.transactionLog.routes;
 
-import com.pawmot.hajsback.common.JmsEndpointFactory;
-import com.pawmot.hajsback.internal.api.results.Result;
-import com.pawmot.hajsback.internal.api.results.ResultKind;
+import com.pawmot.hajsback.transactionLog.dto.Result;
+import com.pawmot.hajsback.transactionLog.dto.ResultKind;
+import com.pawmot.hajsback.transactionLog.jms.JmsEndpointFactory;
 import org.apache.camel.spring.SpringRouteBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static com.pawmot.hajsback.internal.api.transactions.QueueNames.DEBT_GRAPH_QUEUE;
 import static org.apache.camel.ExchangePattern.InOnly;
 import static org.apache.camel.component.jms.JmsMessageType.Text;
 import static org.apache.camel.model.dataformat.JsonLibrary.Gson;
 
 @Component
 public class DebtGraphRoute extends SpringRouteBuilder {
-    private final JmsEndpointFactory jmsEndpointFactory;
 
-    public DebtGraphRoute(JmsEndpointFactory jmsEndpointFactory) {
+    private final JmsEndpointFactory jmsEndpointFactory;
+    private String debtGraphQueueName;
+
+    public DebtGraphRoute(JmsEndpointFactory jmsEndpointFactory, @Value("${queues.debtGraph}") String debtGraphQueueName) {
         this.jmsEndpointFactory = jmsEndpointFactory;
+        this.debtGraphQueueName = debtGraphQueueName;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class DebtGraphRoute extends SpringRouteBuilder {
                     ex.getIn().setBody(body.getData());
                 })
                 .marshal().json(Gson)
-                .to(InOnly, jmsEndpointFactory.createMessageEndpoint(DEBT_GRAPH_QUEUE, Text))
+                .to(InOnly, jmsEndpointFactory.createMessageEndpoint(debtGraphQueueName, Text))
                 .end();
     }
 }

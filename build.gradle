@@ -43,8 +43,8 @@ dependencies {
 
     // Lombok
     compileOnly "org.projectlombok:lombok:1.16.10"
+}
 
-    // internal
-    compile project(":internal-api")
-    compile project(":common")
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.4"
 }

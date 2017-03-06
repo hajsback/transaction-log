@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RepayDebtRequestValidatorTest {
-    private RepayDebtRequestValidator validator = new RepayDebtRequestValidatorImpl();
+    private RepayDebtRequestValidator validator = new RepayDebtRequestValidator();
 
     @Test
     public void shouldAcceptPositiveAmountMatchingCreditorAddress() {
